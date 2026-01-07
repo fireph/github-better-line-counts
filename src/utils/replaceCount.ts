@@ -1,4 +1,4 @@
-import { getGithubService } from "./github";
+import { createProxyService } from "@webext-core/proxy-service";
 import type { RecalculateOptions, RecalculateResult } from "./github";
 
 /**
@@ -12,7 +12,7 @@ export function replaceCount(
   if (existing) return;
 
   const start = Date.now();
-  const github = getGithubService();
+  const github = createProxyService(GITHUB_SERVICE_KEY);
   const stats = github.recalculateDiff(options).then((diff) => {
     logger.debug("Diff:", diff);
     logger.debug(`Diff calculated in ${Date.now() - start}ms`);

@@ -1,15 +1,14 @@
-import { defineProxyService } from "@webext-core/proxy-service";
-import type { GithubApi } from "./api";
-import type { DiffEntry } from "./types";
 import { minimatch } from "minimatch";
 import { GitAttributes } from "../gitattributes";
+import type { GithubApi } from "./api";
+import type { DiffEntry, User } from "./types";
 
-export const [registerGithubService, getGithubService] = defineProxyService(
-  "GithubService",
-  createGithubService,
-);
+export interface GithubService {
+  recalculateDiff(options: RecalculateOptions): Promise<RecalculateResult>;
+  getUser(token: string): Promise<User>;
+}
 
-function createGithubService(api: GithubApi) {
+export function createGithubService(api: GithubApi): GithubService {
   const mountCache: { [mountId: number]: RecalculateResult } = {};
 
   /**
@@ -121,9 +120,7 @@ function createGithubService(api: GithubApi) {
   }
 
   return {
-    async recalculateDiff(
-      options: RecalculateOptions,
-    ): Promise<RecalculateResult> {
+    async recalculateDiff(options) {
       // Cache the result if the same content script tries to get the result multiple times.
       if (mountCache[options.mountId]) {
         logger.debug("[recalculateDiff] Using mount cache");

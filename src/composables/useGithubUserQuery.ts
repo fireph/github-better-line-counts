@@ -1,7 +1,8 @@
-import { getGithubService, Github } from "@/utils/github";
+import { Github } from "@/utils/github";
+import { createProxyService } from "@webext-core/proxy-service";
 
 export default function (token: { value: string | undefined }) {
-  const github = getGithubService();
+  const github = createProxyService(GITHUB_SERVICE_KEY);
 
   return useQuery<Github.User | undefined>({
     queryKey: [QueryKeys.GithubUser, token],
