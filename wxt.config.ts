@@ -1,6 +1,6 @@
-import { defineConfig } from "wxt";
-import Icons from "unplugin-icons/vite";
 import Tailwindcss from "@tailwindcss/vite";
+import Icons from "unplugin-icons/vite";
+import { defineConfig } from "wxt";
 
 export default defineConfig({
   srcDir: "src",
