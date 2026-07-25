@@ -15,7 +15,11 @@ export const PrDiff = createDiffComponent({
     ),
   addSpinnerToPage(spinner) {
     const deletions = this.getDeletionsElement();
-    deletions?.replaceWith(deletions, spinner);
+    if (deletions) {
+      deletions.replaceWith(deletions, spinner);
+    } else {
+      this.getAdditionsElement()?.after(spinner);
+    }
   },
   getAdditionsText: (count) => i18n.t("diffs.additionsSymbol", [count]),
   getDeletionsText: (count) => i18n.t("diffs.deletionsSymbol", [count]),

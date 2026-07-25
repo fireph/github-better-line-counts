@@ -14,7 +14,12 @@ export const CommitDiff = createDiffComponent({
       "#diff-content-parent .fgColor-danger",
     ),
   addSpinnerToPage(spinner) {
-    this.getDeletionsElement()?.after(spinner);
+    const deletions = this.getDeletionsElement();
+    if (deletions) {
+      deletions.after(spinner);
+    } else {
+      this.getAdditionsElement()?.after(spinner);
+    }
   },
   getAdditionsText: (count) => i18n.t("diffs.additionsText", count),
   getDeletionsText: (count) => i18n.t("diffs.deletionsText", count),

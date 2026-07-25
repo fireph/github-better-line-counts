@@ -59,7 +59,11 @@ export function createDiffComponent(options: {
           stats.exclude.deletions,
         ]);
         generated.title = `${generatedAdditionsText} ${generatedDeletionsText}`;
-        spinner.replaceWith(generated);
+        if (spinner.isConnected) {
+          spinner.replaceWith(generated);
+        } else {
+          (deletions ?? additions)?.after(generated);
+        }
       } else {
         hideSpinner();
       }

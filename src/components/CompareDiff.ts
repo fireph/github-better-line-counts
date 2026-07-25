@@ -10,7 +10,9 @@ export const CompareDiff = createDiffComponent({
       [".toc-diff-stats>strong", 1],
     ),
   addSpinnerToPage(spinner) {
-    const container = this.getDeletionsElement()?.parentElement;
+    const deletions = this.getDeletionsElement();
+    const anchor = deletions ?? this.getAdditionsElement();
+    const container = anchor?.parentElement;
     container?.appendChild(spinner);
   },
   getAdditionsText: (count) => i18n.t("diffs.additionsText", count),
